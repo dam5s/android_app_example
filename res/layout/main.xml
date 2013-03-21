@@ -4,10 +4,30 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
         >
-    <TextView
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Hello World, HomeActivity"
-            />
+            android:layout_height="fill_parent" android:layout_gravity="right|center_vertical">
+        <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/loginEditText"
+                android:id="@+id/loginEditText" android:layout_gravity="center"/>
+        <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/passwordEditText"
+                android:id="@+id/passwordEditText" android:layout_gravity="center"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/signInButtonText"
+                android:id="@+id/signInButton" android:layout_gravity="right|center_vertical" android:textStyle="bold"/>
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="48dp"
+                android:text="@string/initialSignInResultText"
+                android:id="@+id/signInResultTextView" android:gravity="center" android:textStyle="bold"/>
+    </LinearLayout>
 </LinearLayout>
 

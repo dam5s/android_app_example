@@ -8,28 +8,35 @@ package com.example.androidApp;
  * To change this template use File | Settings | File Templates.
  */
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import static org.fest.assertions.api.Assertions.assertThat;
-import static org.fest.assertions.api.ANDROID.assertThat;
 
 
 @RunWith(RobolectricTestRunner.class)
 public class HomeActivityTest {
+    private HomeActivity activity;
+
+    @Before
+    public void setUp() {
+        activity = new HomeActivity();
+        activity.onCreate(null);
+    }
 
     @Test
     public void shouldHaveProperAppName() throws Exception {
-        String appName = new HomeActivity().getResources().getString(R.string.app_name);
+        String appName = activity.getResources().getString(R.string.app_name);
         assertThat(appName).isEqualTo("AndroidApp");
     }
 
     @Test
     public void shouldInjectViews() {
-        HomeActivity activity = new HomeActivity();
-        activity.onCreate(null);
-
-        assertThat(activity.loginEditText).hasText("Login");
+        assertThat(activity.loginEditText.getText().toString()).isEqualTo("Login");
+        assertThat(activity.passwordEditText.getText().toString()).isEqualTo("Password");
+        assertThat(activity.signInButton.getText().toString()).isEqualTo("Sign in to Pivotal Tracker");
+        assertThat(activity.signInResultTextView.getText().toString()).isEqualTo("");
     }
 }
