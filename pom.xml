@@ -14,7 +14,15 @@
     </properties>
 
     <dependencies>
-        <!-- Prod dependencies -->
+        <!-- Robolectric -->
+        <dependency>
+            <groupId>org.robolectric</groupId>
+            <artifactId>robolectric</artifactId>
+            <version>2.0-alpha-3-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Android -->
         <dependency>
             <groupId>com.google.android</groupId>
             <artifactId>android</artifactId>
@@ -22,6 +30,7 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Dependency Injection -->
         <dependency>
             <groupId>org.roboguice</groupId>
             <artifactId>roboguice</artifactId>
@@ -36,13 +45,6 @@
         </dependency>
 
         <!-- Testing dependencies -->
-        <dependency>
-            <groupId>org.robolectric</groupId>
-            <artifactId>robolectric</artifactId>
-            <version>2.0-alpha-3-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
