@@ -39,4 +39,22 @@ public class HomeActivityTest {
         assertThat(activity.signInButton.getText().toString()).isEqualTo("Sign in to Pivotal Tracker");
         assertThat(activity.signInResultTextView.getText().toString()).isEqualTo("");
     }
+
+    @Test
+    public void shouldEmptyLoginEditTextOnFocus() {
+        activity.loginEditText.getOnFocusChangeListener().onFocusChange(activity.loginEditText, false);
+        assertThat(activity.loginEditText.getText().toString()).isNotEqualTo("");
+
+        activity.loginEditText.getOnFocusChangeListener().onFocusChange(activity.loginEditText, true);
+        assertThat(activity.loginEditText.getText().toString()).isEqualTo("");
+    }
+
+    @Test
+    public void shouldEmptyPasswordEditTextOnFocus() {
+        activity.passwordEditText.getOnFocusChangeListener().onFocusChange(activity.passwordEditText, false);
+        assertThat(activity.passwordEditText.getText().toString()).isNotEqualTo("");
+
+        activity.passwordEditText.getOnFocusChangeListener().onFocusChange(activity.passwordEditText, true);
+        assertThat(activity.passwordEditText.getText().toString()).isEqualTo("");
+    }
 }
