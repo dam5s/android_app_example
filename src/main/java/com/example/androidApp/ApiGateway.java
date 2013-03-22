@@ -33,7 +33,12 @@ public class ApiGateway {
             InputStream responseBody = null;
 
             try {
-                Http.Response response = http.get(apiRequest.getUrl(), apiRequest.getHeaders(), null, null);
+                Http.Response response = http.get(
+                    apiRequest.getUrl(),
+                    apiRequest.getHeaders(),
+                    apiRequest.getUsername(),
+                    apiRequest.getPassword()
+                );
                 responseBody = response.getResponseBody();
 
                 return new ApiResponse(response.getStatusCode(), responseBody);

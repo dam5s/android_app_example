@@ -1,10 +1,16 @@
 package com.example.androidApp;
 
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpResponse;
+import org.apache.http.RequestLine;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.shadows.HttpResponseGenerator;
+import org.robolectric.tester.org.apache.http.RequestMatcher;
+import org.robolectric.tester.org.apache.http.TestHttpResponse;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
@@ -18,24 +24,35 @@ import static org.fest.assertions.api.Assertions.assertThat;
 @RunWith(RobolectricTestRunner.class)
 public class ApiGatewayTest {
     private ApiGateway apiGateway;
+    private ApiRequest getRequest;
+
+    private RequestMatcher getRequestMatcher = new RequestMatcher() {
+        public boolean matches(HttpRequest request) {
+            RequestLine requestLine = request.getRequestLine();
+            assertThat(requestLine.getUri()).isEqualTo("http://example.com/api");
+            assertThat(requestLine.getMethod()).isEqualTo("GET");
+            return true;
+        }
+    };
 
     @Before
     public void setUp() throws Exception {
         apiGateway = new ApiGateway();
+
+        getRequest = new ApiRequest();
+        getRequest.setUrl("http://example.com/api");
+        getRequest.setUsername("some username");
+        getRequest.setPassword("p4ssword");
+        getRequest.setMethod(ApiRequest.GET);
     }
 
     @Test
     public void testPerformRequestCallbacksOnSuccess() throws Exception {
-        Robolectric.getBackgroundScheduler().pause();
-
         TestCallbacks callbacks = new TestCallbacks();
-        ApiRequest request = new ApiRequest();
-        request.setUrl("http://example.com/api");
 
-        apiGateway.performRequest(request, callbacks);
+        Robolectric.addHttpResponseRule(getRequestMatcher, new TestHttpResponse(200, "<response>success</response>"));
 
-        Robolectric.addPendingHttpResponse(200, "<response>success</response>");
-        Robolectric.getBackgroundScheduler().runOneTask();
+        apiGateway.performRequest(getRequest, callbacks);
 
         assertThat(callbacks.didCallComplete).isTrue();
         assertThat(callbacks.didCallSuccess).isTrue();
@@ -44,16 +61,11 @@ public class ApiGatewayTest {
 
     @Test
     public void testPerformRequestCallbacksOnFailure() throws Exception {
-        Robolectric.getBackgroundScheduler().pause();
-
         TestCallbacks callbacks = new TestCallbacks();
-        ApiRequest request = new ApiRequest();
-        request.setUrl("http://example.com/api");
 
-        apiGateway.performRequest(request, callbacks);
+        Robolectric.addHttpResponseRule(getRequestMatcher, new TestHttpResponse(400, "<response>failure</response>"));
 
-        Robolectric.addPendingHttpResponse(400, "<response>failure</response>");
-        Robolectric.getBackgroundScheduler().runOneTask();
+        apiGateway.performRequest(getRequest, callbacks);
 
         assertThat(callbacks.didCallComplete).isTrue();
         assertThat(callbacks.didCallSuccess).isFalse();

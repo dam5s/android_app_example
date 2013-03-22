@@ -41,27 +41,27 @@ public class Http {
     public Response post(String url, Map<String, String> headers, String postBody, String username, String password)
             throws IOException, URISyntaxException {
         URI uri = new URI(url);
-        HttpPost method = new HttpPost(uri);
-        method.setEntity(new StringEntity(postBody, "UTF-8"));
-        return makeRequest(headers, username, password, method, uri.getHost());
+        HttpPost request = new HttpPost(uri);
+        request.setEntity(new StringEntity(postBody, "UTF-8"));
+        return makeRequest(headers, username, password, request, uri.getHost());
     }
 
     public Response put(String url, Map<String, String> headers, String postBody, String username, String password)
             throws IOException, URISyntaxException {
         URI uri = new URI(url);
-        HttpPut method = new HttpPut(uri);
-        method.setEntity(new StringEntity(postBody, "UTF-8"));
-        return makeRequest(headers, username, password, method, uri.getHost());
+        HttpPut request = new HttpPut(uri);
+        request.setEntity(new StringEntity(postBody, "UTF-8"));
+        return makeRequest(headers, username, password, request, uri.getHost());
     }
 
-    private Response makeRequest(Map<String, String> headers, String username, String password, HttpRequestBase method, String host) {
+    private Response makeRequest(Map<String, String> headers, String username, String password, HttpRequestBase request, String host) {
         try {
             for (Map.Entry<String, String> entry : headers.entrySet()) {
-                method.setHeader(entry.getKey(), entry.getValue());
+                request.setHeader(entry.getKey(), entry.getValue());
             }
             DefaultHttpClient client = getHttpClient();
             addBasicAuthCredentials(client, host, username, password);
-            return new Response(client.execute(method));
+            return new Response(client.execute(request));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
