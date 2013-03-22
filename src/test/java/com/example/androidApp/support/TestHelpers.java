@@ -17,8 +17,12 @@ public class TestHelpers {
     public static RoboInjector updateApplicationInjectorWithModule(Module module) {
         Application application = Robolectric.application;
 
-        RoboGuice.setBaseApplicationInjector(application, RoboGuice.DEFAULT_STAGE,
-                RoboGuice.newDefaultRoboModule(application), module);
+        RoboGuice.setBaseApplicationInjector(
+                application,
+                RoboGuice.DEFAULT_STAGE,
+                RoboGuice.newDefaultRoboModule(application),
+                module
+        );
 
         return RoboGuice.getInjector(application);
     }

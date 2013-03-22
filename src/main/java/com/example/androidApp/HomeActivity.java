@@ -45,6 +45,7 @@ public class HomeActivity extends RoboActivity {
         public void onClick(View view) {
             String username = loginEditText.getText().toString();
             String password = passwordEditText.getText().toString();
+            signInResultTextView.setText(R.string.progressSignInResultText);
 
             authenticationGateway.signIn(username, password, new ApiResponseCallbacks() {
                 public void onSuccess(ApiResponse response) {

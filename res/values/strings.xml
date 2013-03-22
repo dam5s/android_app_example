@@ -5,6 +5,7 @@
     <string name="passwordEditText">Password</string>
     <string name="signInButtonText">Sign in to Pivotal Tracker</string>
     <string name="initialSignInResultText"></string>
+    <string name="progressSignInResultText">Contacting server...</string>
     <string name="successSignInResultText">Signed in with success!</string>
     <string name="errorSignInResultText">Error signing in!</string>
 </resources>
