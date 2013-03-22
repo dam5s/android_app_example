@@ -22,6 +22,11 @@ public class ApiRequest {
     private String password;
     private Map<String, String> headers = new HashMap<String, String>();
 
+    public ApiRequest() {
+        addHeader("Content-Type", "application/xml");
+        addHeader("Accept", "application/xml");
+    }
+
     public String getMethod() {
         return method;
     }
@@ -34,31 +39,31 @@ public class ApiRequest {
         return headers;
     }
 
-    public void setMethod(String method) {
-        this.method = method;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public void setHeaders(Map<String, String> headers) {
-        this.headers = headers;
-    }
-
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    protected void setMethod(String method) {
+        this.method = method;
+    }
+
+    protected void setUrl(String url) {
+        this.url = url;
+    }
+
+    protected void addHeader(String name, String value) {
+        getHeaders().put(name, value);
+    }
+
+    protected void setUsername(String username) {
+        this.username = username;
+    }
+
+    protected void setPassword(String password) {
         this.password = password;
     }
 }
