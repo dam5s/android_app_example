@@ -8,6 +8,7 @@ import com.example.androidApp.api.ApiResponse;
 import com.example.androidApp.api.ApiResponseCallbacks;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
@@ -19,8 +20,8 @@ import static org.fest.assertions.api.Assertions.assertThat;
  * To change this template use File | Settings | File Templates.
  */
 public class FakeApiGateway extends ApiGateway {
-    public ArrayList<ApiResponse> stubbedApiResponses;
-    public ArrayList<ApiRequest> stubbedApiRequests;
+    private List<ApiResponse> stubbedApiResponses;
+    private List<ApiRequest> stubbedApiRequests;
 
     public FakeApiGateway() {
         stubbedApiResponses = new ArrayList<ApiResponse>();
