@@ -16,8 +16,15 @@ import java.io.InputStream;
 public class ApiGateway {
     private static final Http http = new Http();
 
-    public void performRequest(ApiRequest request, ApiResponseCallbacks callbacks) {
+    public void performRequest(ApiRequest request, final ApiResponseCallbacks callbacks) {
         new ApiRequestTask(callbacks).execute(request);
+    }
+
+    protected void processResponse(ApiResponse apiResponse, final ApiResponseCallbacks callbacks) {
+        callbacks.onComplete(apiResponse);
+
+        if (apiResponse.isSuccess()) { callbacks.onSuccess(apiResponse); }
+        if (apiResponse.isFailure()) { callbacks.onFailure(apiResponse); }
     }
 
     private class ApiRequestTask extends AsyncTask<ApiRequest, Void, ApiResponse> {
@@ -45,7 +52,7 @@ public class ApiGateway {
             }
 
             catch (Exception e) {
-                return new ApiResponse(-1, null);
+                return new ApiResponse(-1, (InputStream)null);
             }
 
             finally {
@@ -57,10 +64,7 @@ public class ApiGateway {
 
         @Override
         protected void onPostExecute(ApiResponse apiResponse) {
-            this.callbacks.onComplete(apiResponse);
-
-            if (apiResponse.isSuccess()) { this.callbacks.onSuccess(apiResponse); }
-            if (apiResponse.isFailure()) { this.callbacks.onFailure(apiResponse); }
+            processResponse(apiResponse, this.callbacks);
         }
     }
 }

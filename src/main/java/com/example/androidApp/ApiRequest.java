@@ -66,4 +66,22 @@ public class ApiRequest {
     protected void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public boolean equals (Object otherObject) {
+        boolean isEqual = false;
+
+        if (otherObject instanceof ApiRequest) {
+            ApiRequest otherRequest = (ApiRequest)otherObject;
+            isEqual = true;
+
+            isEqual = isEqual && getMethod().equals(otherRequest.getMethod());
+            isEqual = isEqual && getUrl().equals(otherRequest.getUrl());
+            isEqual = isEqual && getHeaders().equals(otherRequest.getHeaders());
+            isEqual = isEqual && getUsername().equals(otherRequest.getUsername());
+            isEqual = isEqual && getPassword().equals(otherRequest.getPassword());
+        }
+
+        return isEqual;
+    }
 }

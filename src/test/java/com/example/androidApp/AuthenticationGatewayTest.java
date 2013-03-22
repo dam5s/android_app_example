@@ -1,6 +1,7 @@
 package com.example.androidApp;
 
 import android.app.Application;
+import com.example.androidApp.support.ApplicationModuleWithMockApiGateway;
 import com.google.inject.AbstractModule;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +14,7 @@ import roboguice.inject.RoboInjector;
 
 import java.util.Map;
 
+import static com.example.androidApp.support.TestHelpers.updateApplicationInjectorWithModule;
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -33,11 +35,7 @@ public class AuthenticationGatewayTest {
 
     @Before
     public void setUp() throws Exception {
-        Application application = Robolectric.application;
-
-        RoboGuice.setBaseApplicationInjector(application, RoboGuice.DEFAULT_STAGE,
-                RoboGuice.newDefaultRoboModule(application), new ApplicationModuleWithMockApiGateway());
-        RoboInjector injector = RoboGuice.getInjector(application);
+        RoboInjector injector = updateApplicationInjectorWithModule(new ApplicationModuleWithMockApiGateway());
 
         apiGateway = injector.getInstance(ApiGateway.class);
         authenticationGateway = injector.getInstance(AuthenticationGateway.class);
@@ -65,12 +63,5 @@ public class AuthenticationGatewayTest {
 
         assertThat(headers.get("Content-Type")).isEqualTo("application/xml");
         assertThat(headers.get("Accept")).isEqualTo("application/xml");
-    }
-
-    public static class ApplicationModuleWithMockApiGateway extends AbstractModule {
-        @Override
-        public void configure() {
-            bind(ApiGateway.class).toInstance(mock(ApiGateway.class));
-        }
     }
 }

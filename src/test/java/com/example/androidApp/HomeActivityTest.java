@@ -8,20 +8,28 @@ package com.example.androidApp;
  * To change this template use File | Settings | File Templates.
  */
 
+import com.example.androidApp.support.ApplicationModuleWithFakeApiGateway;
+import com.example.androidApp.support.FakeApiGateway;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
+import roboguice.inject.RoboInjector;
 
+import static com.example.androidApp.support.TestHelpers.updateApplicationInjectorWithModule;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 
 @RunWith(RobolectricTestRunner.class)
 public class HomeActivityTest {
     private HomeActivity activity;
+    private FakeApiGateway fakeApiGateway;
 
     @Before
     public void setUp() {
+        RoboInjector injector = updateApplicationInjectorWithModule(new ApplicationModuleWithFakeApiGateway());
+        fakeApiGateway = (FakeApiGateway) injector.getInstance(ApiGateway.class);
+
         activity = new HomeActivity();
         activity.onCreate(null);
     }
@@ -56,5 +64,33 @@ public class HomeActivityTest {
 
         activity.passwordEditText.getOnFocusChangeListener().onFocusChange(activity.passwordEditText, true);
         assertThat(activity.passwordEditText.getText().toString()).isEqualTo("");
+    }
+
+    @Test
+    public void shouldHandleSignInSuccess() {
+        String username = "Foo";
+        String password = "Bar";
+
+        fakeApiGateway.stubAuthenticationSignInAsSuccess(username, password);
+
+        activity.loginEditText.setText(username);
+        activity.passwordEditText.setText(password);
+        activity.signInButton.performClick();
+
+        assertThat(activity.signInResultTextView.getText().toString()).isEqualTo("Signed in with success!");
+    }
+
+    @Test
+    public void shouldHandleSignInError() {
+        String username = "Foo";
+        String password = "Bar";
+
+        fakeApiGateway.stubAuthenticationSignInAsFailure(username, password);
+
+        activity.loginEditText.setText(username);
+        activity.passwordEditText.setText(password);
+        activity.signInButton.performClick();
+
+        assertThat(activity.signInResultTextView.getText().toString()).isEqualTo("Error signing in!");
     }
 }

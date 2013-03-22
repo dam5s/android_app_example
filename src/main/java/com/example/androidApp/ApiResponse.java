@@ -1,5 +1,6 @@
 package com.example.androidApp;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 /**
@@ -16,6 +17,14 @@ public class ApiResponse {
     public ApiResponse(int status, InputStream responseBody) {
         this.status = status;
         this.responseBody = responseBody;
+    }
+
+    public ApiResponse(int status, String responseBodyString) {
+        this.status = status;
+        try {
+            this.responseBody = new ByteArrayInputStream(responseBodyString.getBytes("UTF-8"));
+        }
+        catch (Exception e) {}
     }
 
     public boolean isSuccess() {

@@ -20,37 +20,37 @@ public class ApiResponseTest {
 
     @Test
     public void isSuccess_shouldReturnTrueWhenStatusIsBetween200And299() {
-        response = new ApiResponse(200, null){};
+        response = new ApiResponse(200, ""){};
         assertThat(response.isSuccess()).isTrue();
 
-        response = new ApiResponse(299, null){};
+        response = new ApiResponse(299, ""){};
         assertThat(response.isSuccess()).isTrue();
     }
 
     @Test
     public void isSuccess_shouldReturnFalseWhenStatusIsNotBetween200And299() {
-        response = new ApiResponse(199, null){};
+        response = new ApiResponse(199, ""){};
         assertThat(response.isSuccess()).isFalse();
 
-        response = new ApiResponse(300, null){};
+        response = new ApiResponse(300, ""){};
         assertThat(response.isSuccess()).isFalse();
     }
 
     @Test
     public void isFailure_shouldReturnTrueWhenStatusIs400OrGreater() {
-        response = new ApiResponse(400, null){};
+        response = new ApiResponse(400, ""){};
         assertThat(response.isFailure()).isTrue();
 
-        response = new ApiResponse(500, null){};
+        response = new ApiResponse(500, ""){};
         assertThat(response.isFailure()).isTrue();
     }
 
     @Test
     public void isFailure_shouldReturnFalseWhenStatusIsLessThan400() {
-        response = new ApiResponse(399, null){};
+        response = new ApiResponse(399, ""){};
         assertThat(response.isFailure()).isFalse();
 
-        response = new ApiResponse(200, null){};
+        response = new ApiResponse(200, ""){};
         assertThat(response.isFailure()).isFalse();
     }
 }
