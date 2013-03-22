@@ -1,14 +1,12 @@
-package com.example.androidApp;
+package com.example.androidApp.api;
 
 import org.apache.http.HttpRequest;
-import org.apache.http.HttpResponse;
 import org.apache.http.RequestLine;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.shadows.HttpResponseGenerator;
 import org.robolectric.tester.org.apache.http.RequestMatcher;
 import org.robolectric.tester.org.apache.http.TestHttpResponse;
 

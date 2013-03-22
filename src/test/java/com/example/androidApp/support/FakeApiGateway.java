@@ -2,8 +2,11 @@ package com.example.androidApp.support;
 
 
 import com.example.androidApp.*;
+import com.example.androidApp.api.ApiGateway;
+import com.example.androidApp.api.ApiRequest;
+import com.example.androidApp.api.ApiResponse;
+import com.example.androidApp.api.ApiResponseCallbacks;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.fest.assertions.api.Assertions.assertThat;

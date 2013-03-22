@@ -1,15 +1,15 @@
 package com.example.androidApp;
 
-import android.app.Application;
+import com.example.androidApp.api.ApiGateway;
+import com.example.androidApp.api.ApiRequest;
+import com.example.androidApp.api.ApiResponse;
+import com.example.androidApp.api.ApiResponseCallbacks;
 import com.example.androidApp.support.ApplicationModuleWithMockApiGateway;
-import com.google.inject.AbstractModule;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import roboguice.RoboGuice;
 import roboguice.inject.RoboInjector;
 
 import java.util.Map;

@@ -1,6 +1,6 @@
 package com.example.androidApp.support;
 
-import com.example.androidApp.ApiGateway;
+import com.example.androidApp.api.ApiGateway;
 import com.google.inject.AbstractModule;
 
 /**

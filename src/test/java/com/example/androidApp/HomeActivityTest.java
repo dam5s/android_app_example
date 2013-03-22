@@ -8,6 +8,7 @@ package com.example.androidApp;
  * To change this template use File | Settings | File Templates.
  */
 
+import com.example.androidApp.api.ApiGateway;
 import com.example.androidApp.support.ApplicationModuleWithFakeApiGateway;
 import com.example.androidApp.support.FakeApiGateway;
 import org.junit.Before;

@@ -1,4 +1,4 @@
-package com.example.androidApp;
+package com.example.androidApp.api;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

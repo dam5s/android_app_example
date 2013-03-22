@@ -1,6 +1,7 @@
 package com.example.androidApp;
 
-import android.os.AsyncTask;
+import com.example.androidApp.api.ApiGateway;
+import com.example.androidApp.api.ApiResponseCallbacks;
 
 import javax.inject.Inject;
 

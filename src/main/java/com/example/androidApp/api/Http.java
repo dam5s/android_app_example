@@ -1,4 +1,4 @@
-package com.example.androidApp;
+package com.example.androidApp.api;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;

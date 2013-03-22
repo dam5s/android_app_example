@@ -1,7 +1,6 @@
-package com.example.androidApp;
+package com.example.androidApp.api;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;

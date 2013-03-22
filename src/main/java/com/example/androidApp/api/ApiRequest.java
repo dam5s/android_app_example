@@ -1,4 +1,4 @@
-package com.example.androidApp;
+package com.example.androidApp.api;
 
 import java.util.HashMap;
 import java.util.Map;

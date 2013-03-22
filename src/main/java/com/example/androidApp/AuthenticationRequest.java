@@ -1,5 +1,7 @@
 package com.example.androidApp;
 
+import com.example.androidApp.api.ApiRequest;
+
 /**
  * Created with IntelliJ IDEA.
  * User: pivotal
