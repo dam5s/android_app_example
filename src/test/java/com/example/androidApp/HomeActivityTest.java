@@ -8,6 +8,9 @@ package com.example.androidApp;
  * To change this template use File | Settings | File Templates.
  */
 
+import android.location.Location;
+import android.location.LocationManager;
+import android.location.LocationProvider;
 import com.example.androidApp.api.ApiGateway;
 import com.example.androidApp.support.ApplicationModuleWithFakeApiGateway;
 import com.example.androidApp.support.FakeApiGateway;
@@ -15,10 +18,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.shadows.ShadowLocationManager;
 import roboguice.inject.RoboInjector;
 
 import static com.example.androidApp.support.TestHelpers.updateApplicationInjectorWithModule;
 import static org.fest.assertions.api.Assertions.assertThat;
+import static org.robolectric.Robolectric.shadowOf;
 
 
 @RunWith(RobolectricTestRunner.class)
@@ -47,6 +52,9 @@ public class HomeActivityTest {
         assertThat(activity.passwordEditText.getText().toString()).isEqualTo("Password");
         assertThat(activity.signInButton.getText().toString()).isEqualTo("Sign in to Pivotal Tracker");
         assertThat(activity.signInResultTextView.getText().toString()).isEqualTo("");
+
+        assertThat(activity.locateMeButton.getText().toString()).isEqualTo("Locate Me!");
+        assertThat(activity.locateMeResultTextView.getText().toString()).isEqualTo("...");
     }
 
     @Test
@@ -93,5 +101,21 @@ public class HomeActivityTest {
         activity.signInButton.performClick();
 
         assertThat(activity.signInResultTextView.getText().toString()).isEqualTo("Error signing in!");
+    }
+
+    @Test
+    public void shouldLocateTheDevice() {
+        activity.locateMeButton.performClick();
+        assertThat(activity.locateMeResultTextView.getText().toString()).isEqualTo("Looking up location...");
+
+        ShadowLocationManager locationManagerShadow = shadowOf(activity.locationManager);
+        assertThat(locationManagerShadow.getRequestLocationUpdateListeners().size()).isEqualTo(1);
+
+        Location testLocation = new Location(LocationManager.GPS_PROVIDER);
+        testLocation.setLongitude(15.123456);
+        testLocation.setLatitude(20.123456);
+
+        locationManagerShadow.simulateLocation(testLocation);
+        assertThat(activity.locateMeResultTextView.getText().toString()).isEqualTo("Location (15.123456, 20.123456)");
     }
 }

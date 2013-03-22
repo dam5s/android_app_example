@@ -1,6 +1,13 @@
 package com.example.androidApp;
 
+import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,10 +34,45 @@ public class HomeActivity extends RoboActivity {
     @InjectView(R.id.signInResultTextView)
     TextView signInResultTextView;
 
+    @InjectView(R.id.locateMeButton)
+    Button locateMeButton;
+
+    @InjectView(R.id.locateMeResultTextView)
+    TextView locateMeResultTextView;
+
     private
 
     @Inject
     AuthenticationGateway authenticationGateway;
+
+    @Inject
+    LocationManager locationManager;
+
+    LocationListener locationListener = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            locateMeResultTextView.setText("Location (" +location.getLongitude()+ ", " +location.getLatitude()+ ")");
+        }
+
+        public void onStatusChanged(String s, int i, Bundle bundle) { }
+        public void onProviderEnabled(String s) { }
+        public void onProviderDisabled(String s) { }
+    };
+
+    View.OnClickListener locateMeButtonClickListener = new View.OnClickListener() {
+        public void onClick(View view) {
+            locateMeResultTextView.setText(R.string.locateMeProgressResultText);
+
+            Criteria criteria = new Criteria();
+            criteria.setAccuracy(Criteria.ACCURACY_FINE);
+            criteria.setPowerRequirement(Criteria.POWER_MEDIUM);
+            criteria.setAltitudeRequired(false);
+            criteria.setBearingRequired(false);
+            criteria.setSpeedRequired(false);
+            criteria.setCostAllowed(true);
+
+            locationManager.requestSingleUpdate(criteria, locationListener, Looper.myLooper());
+        }
+    };
 
     View.OnFocusChangeListener emptyEditTextOnFocusListener = new View.OnFocusChangeListener() {
         public void onFocusChange(View view, boolean focus) {
@@ -56,7 +98,8 @@ public class HomeActivity extends RoboActivity {
                     signInResultTextView.setText(R.string.errorSignInResultText);
                 }
 
-                public void onComplete(ApiResponse response) { }
+                public void onComplete(ApiResponse response) {
+                }
             });
         }
     };
@@ -72,5 +115,6 @@ public class HomeActivity extends RoboActivity {
         loginEditText.setOnFocusChangeListener(emptyEditTextOnFocusListener);
         passwordEditText.setOnFocusChangeListener(emptyEditTextOnFocusListener);
         signInButton.setOnClickListener(signInButtonClickListener);
+        locateMeButton.setOnClickListener(locateMeButtonClickListener);
     }
 }

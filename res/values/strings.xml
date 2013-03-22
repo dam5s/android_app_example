@@ -8,4 +8,6 @@
     <string name="progressSignInResultText">Contacting server...</string>
     <string name="successSignInResultText">Signed in with success!</string>
     <string name="errorSignInResultText">Error signing in!</string>
+    <string name="locateMeButton">Locate Me!</string>
+    <string name="locateMeProgressResultText">Looking up location...</string>
 </resources>
