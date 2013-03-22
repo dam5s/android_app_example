@@ -12,3 +12,12 @@ Some low level Api code comes from the Pivotal Android IntellJ Starter project.
 Namely: Http and EasySSLSocketFactory.
 
 The rest of the app was entirely test driven.
+
+
+
+The Maven setup is almost ready to use.
+You will need fetch the Android jar file manually (using the Android SDK),
+then install it following the instructions on the Manven Android Plugin website:
+
+https://code.google.com/p/maven-android-plugin/wiki/GettingStarted
+
