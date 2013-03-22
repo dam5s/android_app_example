@@ -1,0 +1,14 @@
+Spike on setting up an Android project using:
+
+IntelliJ IDEA
+Maven
+Android
+Roboguice
+Robolectric
+Mockito
+...
+
+Some low level Api code comes from the Pivotal Android IntellJ Starter project.
+Namely: Http and EasySSLSocketFactory.
+
+The rest of the app was entirely test driven.
